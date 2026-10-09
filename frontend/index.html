@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Analysis AI Agent</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>📊 Data Analysis AI Agent</h1>
+    <div class="badges">
+      <span id="versionBadge" class="badge hidden"></span>
+      <span id="status" class="badge" title="">checking…</span>
+    </div>
+  </header>
+  <div id="toast" class="toast hidden"></div>
+
+  <main class="layout">
+    <!-- LEFT: upload + dashboard -->
+    <section class="panel left">
+      <div class="card">
+        <h2>1. Upload dataset</h2>
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" />
+        <button id="uploadBtn">Upload</button>
+        <p id="uploadMsg" class="msg"></p>
+      </div>
+
+      <div id="dashboard" class="hidden">
+        <div class="card">
+          <h2 id="datasetName">Dataset</h2>
+          <div class="stats">
+            <div class="stat"><span id="statRows">0</span><small>Rows</small></div>
+            <div class="stat"><span id="statCols">0</span><small>Columns</small></div>
+            <div class="stat"><span id="statMissing">0</span><small>Missing values</small></div>
+            <div class="stat"><span id="statDup">0</span><small>Duplicate rows</small></div>
+            <div class="stat"><span id="statNum">0</span><small>Numeric cols</small></div>
+            <div class="stat"><span id="statCat">0</span><small>Categorical cols</small></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs">
+            <button class="tab active" data-tab="preview">Preview</button>
+            <button class="tab" data-tab="stats">Statistics</button>
+            <button class="tab" data-tab="columns">Columns</button>
+            <button class="tab" data-tab="edit">✏️ Edit data</button>
+            <button class="tab" data-tab="insights">AI Insights</button>
+          </div>
+          <div id="tab-preview" class="tabcontent"></div>
+          <div id="tab-stats" class="tabcontent hidden"></div>
+          <div id="tab-columns" class="tabcontent hidden"></div>
+          <div id="tab-edit" class="tabcontent hidden">
+            <div class="toolbar">
+              <button id="saveBtn" disabled>💾 Save changes</button>
+              <button id="discardBtn" class="secondary" disabled>Discard</button>
+              <button id="deleteRowsBtn" class="secondary" disabled>🗑 Delete selected rows</button>
+              <button id="fillBtn" class="secondary">🩹 Fill missing…</button>
+              <button id="undoBtn" class="secondary" disabled>↩ Undo</button>
+              <button id="replaceBtn" class="secondary">📂 Replace file</button>
+              <a id="dlCsv" class="btnlink" href="#">⬇ CSV</a>
+              <a id="dlXlsx" class="btnlink" href="#">⬇ Excel</a>
+              <input type="file" id="replaceInput" accept=".csv,.xlsx,.xls" class="hidden" />
+            </div>
+            <p class="hint">Click any cell to edit it. Empty cells are missing values (highlighted). Changes are saved with <b>Save changes</b>, then the analysis re-runs automatically.</p>
+            <div id="fillHost"></div>
+            <div id="editTable"></div>
+            <div class="pager">
+              <button id="prevPage" class="secondary">‹ Prev</button>
+              <span id="pageLabel"></span>
+              <button id="nextPage" class="secondary">Next ›</button>
+            </div>
+            <div class="tabletitle">Change history</div>
+            <ul id="changeLog" class="changelog"></ul>
+          </div>
+          <div id="tab-insights" class="tabcontent hidden">
+            <button id="insightsBtn">Generate insights</button>
+            <pre id="insightsText" class="insights"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: chat -->
+    <section class="panel right">
+      <div class="card chat">
+        <h2>2. Ask questions</h2>
+        <div id="messages" class="messages">
+          <div class="bubble ai">Upload a CSV or Excel file, then ask me anything about it.</div>
+        </div>
+        <div id="suggestions" class="suggestions hidden"></div>
+        <form id="chatForm" class="chatform">
+          <input id="question" type="text" placeholder="e.g. Which category has the highest sales?" autocomplete="off" disabled />
+          <button id="sendBtn" type="submit" disabled>Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

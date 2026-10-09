@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Secrets - NEVER commit
+.env
+backend/.env
+
+# Runtime files
+backend/uploads/
+*.log
+.vscode/
+.DS_Store
